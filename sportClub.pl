@@ -14,17 +14,17 @@ pos(4). %sec
 
 elect([Arthur,Bart,Colleen,Dona,Eva,Frank]):-
     	% assign each person a number.
-    	% 
-    	pos(Arthur), pos(Bart),pos(Colleen),pos(Dona),pos(Eva),pos(Frank),
+    	 
+    	pos(Arthur), pos(Bart), pos(Colleen), pos(Dona), pos(Eva), pos(Frank),
     	%restrict the values that wont happen
     	Arthur \= 2, %rule 1 (1/2)
 	Bart \= 2, Bart \= 4, %rule 2
-	rule1(Bart, Arthur),
-	rule3(Bart, Frank, Colleen),
-	rule4(Donna, Eva, Frank),
+	rule1(Bart, Arthur), %rule 1 (2/2)
+	rule3(Bart, Frank, Colleen), 
+	rule4(Donna, Eva, Frank), 
 	rule5(Eva, Arthur, Bart),
 	rule6(Frank, Colleen),
-	 % make sure 2 numbers are 0 and 1,2,3,4 are the rest. abuse finite domain.
+% make sure 2 numbers are 0 and 1,2,3,4 are the rest. abuse finite domain.
         count(0,[Arthur,Bart,Colleen,Dona,Eva,Frank],No_Job), No_Job==2,
         count(1,[Arthur,Bart,Colleen,Dona,Eva,Frank],Prez), Prez==1,
         count(2,[Arthur,Bart,Colleen,Dona,Eva,Frank],Vice), Vice==1,
