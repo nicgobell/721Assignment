@@ -54,7 +54,27 @@ equal(A,A).
 	encounters(0,Team,L), L = Loss,
 	encounters(1,Team,D), D = Draw.
 
-onePass(Round) :- encounters(-1,Round,P), P = 1. %derivative helper method to make sure theres only one pass per round
+%onePass(Round) :- encounters(-1,Round,P), P = 1. %derivative helper method to make sure theres only one pass per round
+
+count(_, [], 0) :- !. /* empty list, base case */
+
+count(X, [X|T], N) :- /* if X is in the head of the list */
+    count(X, T, N2), /* count on the tail (let this N2) */
+    N is N2 + 1.     /* and N is N2 + 1  */
+
+count(X, [Y|T], N) :- 
+    X \= Y,          /* if X is not in the head */
+    count(X, T, N).  /* just count the rest */
+
+onePass(Round):- count(-1,Round,N), N=<1.
+
+
+
+
+
+
+
+
 
 /*
 xmember(N,[N|L]).
