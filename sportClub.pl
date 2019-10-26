@@ -1,11 +1,15 @@
-count(_, [], 0) :- !. /* empty list, base case */
-count(X, [X|T], N) :- /* if X is in the head of the list */
-    count(X, T, N2), /* count on the tail (let this N2) */
-    N is N2 + 1.     /* and N is N2 + 1  */
-count(X, [Y|T], N) :- 
-    X \= Y,          /* if X is not in the head */
-    count(X, T, N).  /* just count the rest */
+% query ?-elect([Arthur,Bart,Colleen,Dona,Eva,Frank]).
+%to solve.
 
+
+%bug issue: The error in the code comes from either rule 6 or rule 5 which establishes a contradiction such that frank must equal 3.
+% This solution is however very close to the correct solution which is...
+%F =1
+%A=4
+%B=3
+%C=4
+%D=0=E
+  
 pos(0). %nothing
 pos(1). %prez
 pos(2). %vice-prez
@@ -18,7 +22,7 @@ elect([Arthur,Bart,Colleen,Dona,Eva,Frank]):-
     	pos(Arthur), pos(Bart), pos(Colleen), pos(Dona), pos(Eva), pos(Frank),
     	%restrict the values that wont happen
     	Arthur \= 2, %rule 1 (1/2)
-    Frank \= 4, Frank \=2, 
+    Frank \= 4, Frank \=2, %adding Frank\=3 breaks the program.
 	Bart \= 2, Bart \= 4, %rule 2
 	rule1(Bart, Arthur), %rule 1 (2/2)
     rule6(Frank, Colleen),
@@ -31,12 +35,7 @@ elect([Arthur,Bart,Colleen,Dona,Eva,Frank]):-
         count(2,[Arthur,Bart,Colleen,Dona,Eva,Frank],Vice), Vice==1,
         count(3,[Arthur,Bart,Colleen,Dona,Eva,Frank],Tres), Tres==1,
         count(4,[Arthur,Bart,Colleen,Dona,Eva,Frank],Sec), Sec==1.
-        %Let us constrain the comain further
-
-all_diff([]).
-all_diff([N|L]) :- not( member(N,L) ), all_diff(L).
-
-
+        
 
 
 rule1(0,0).
@@ -59,3 +58,13 @@ rule5(0,A,B) :- A \= 0, B \= 0.
 %rule6(Y,X):-Y==0.
 rule6(F,C):-F\=1.
 rule6(1,C):-C==0.
+
+
+
+%helper
+count(_, [], 0) :- !.
+count(X, [X|T], N) :- 
+    count(X, T, N2), N is N2 + 1.    
+count(X, [Y|T], N) :- 
+    X \= Y,         
+    count(X, T, N).
